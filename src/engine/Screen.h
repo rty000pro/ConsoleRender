@@ -1,0 +1,39 @@
+#pragma once
+#include <iostream>
+#include <string>
+#include <memory>
+#include <vector>
+#include <cstdlib>
+#include <utility>
+#include <algorithm>
+
+enum class DEMOTYPE
+{
+    classic,
+    classicColor,
+    nocolor,
+    color
+};
+
+class screen {
+private:
+    std::vector<std::string> data; // Теперь здесь хранятся символы char
+    int rows;
+    int cols;
+
+public:
+    screen(int r, int c)noexcept : rows(r), cols(c), data(r * c," ") {}
+    //screen(int&& r, int&& c) : rows(std::move(r)), cols(std::move(c)), data(std::move(r) * std::move(c)," ") {}
+    
+    std::string& operator()(int r, int c) 
+    {
+        return data[r * cols + c];
+    }
+
+    int getRows() const { return rows; }
+    int getCols() const { return cols; }
+    
+    void PrintScreen(screen& main);
+
+    void ScreenDemo(DEMOTYPE t);
+};

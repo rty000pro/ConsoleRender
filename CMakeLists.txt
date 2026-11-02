@@ -17,6 +17,8 @@ add_executable(ConsoleRender
     src/main.cpp
     src/engine/Screen.cpp
     src/engine/Screen.h
+    src/engine/GraphScreen.cpp 
+    src/engine/GraphScreen.h
 )
 
 #target_link_libraries(test1 PRIVATE

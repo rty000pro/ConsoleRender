@@ -7,20 +7,53 @@
 #include <cmath>
 #include <algorithm>
 
-void screen::PrintScreen(screen& main)
+void screen::PrintScreen(screen& main,PRINTTYPE t)
 {
     int terminal_cols = cols * 2 + 4;
     int terminal_rows = rows + 2;
     std::cout << "\033[8;" << terminal_rows << ";" << terminal_cols << "t";
     std::cout << std::flush;
-    for (int i = 0; i < main.getRows(); ++i) 
+    switch (t)
     {
-        for (int j = 0; j < main.getCols(); ++j) 
+    case PRINTTYPE::classic:
+    {
+        for (int i = 0; i < main.getRows(); ++i) 
         {
-            std::cout << main(i, j) << main(i,j);
+            for (int j = 0; j < main.getCols(); ++j) 
+            {
+                std::cout << main(i, j) << main(i,j);
+            }
+            std::cout << "\n";
         }
-        std::cout << "\n";
+        break;
     }
+    case PRINTTYPE::graph:
+    {
+        for (int i = 0; i < main.getRows(); ++i) 
+        {
+            for (int j = 0; j < main.getCols(); ++j) 
+            {
+                std::cout << " " << main(i, j);
+            }
+            std::cout << "\n";
+        }
+        break;
+    }
+    default:
+    {
+        for (int i = 0; i < main.getRows(); ++i) 
+        {
+            for (int j = 0; j < main.getCols(); ++j) 
+            {
+                std::cout << "$";
+            }
+            std::cout << "\n";
+        }
+        break;
+    }
+    }
+    
+    
 }
 
 void screen::ScreenDemo(DEMOTYPE t)
@@ -52,7 +85,6 @@ void screen::ScreenDemo(DEMOTYPE t)
     }
     
     screen Demo(screen::getRows(), screen::getCols());
-    std::cout << "init <" << screen::getRows() << "x" << screen::getCols() << ">" << std::endl;
     double cx = Demo.getCols() / 2.0;
     double cy = Demo.getRows() / 2.0;
     double max_radius = std::min(cx, cy) - 1.0;
@@ -109,5 +141,5 @@ void screen::ScreenDemo(DEMOTYPE t)
         }
     }
 
-    PrintScreen(Demo);
+    PrintScreen(Demo,PRINTTYPE::classic);
 }
